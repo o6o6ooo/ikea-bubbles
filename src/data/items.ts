@@ -2,8 +2,8 @@ export type IkeaItem = {
   id: string;
   name: string;
   description: string;
-  imageSrc: string;
   link?: string;
+  archived?: boolean;
 };
 
 export const items: IkeaItem[] = [
@@ -11,13 +11,11 @@ export const items: IkeaItem[] = [
     id: "knorrhaj",
     name: "Knorrhaj",
     description: "pot stand",
-    imageSrc: "/items/knorrhaj.jpg",
     link: "https://www.ikea.com/",
   },
   {
-    id: "vinterfint_1",
+    id: "vinterfint_ornament_red_green_white",
     name: "Vinterfint",
     description: "tree ornament",
-    imageSrc: "/items/vinterfint_1.jpg",
   },
 ];

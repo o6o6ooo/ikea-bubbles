@@ -55,9 +55,13 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
 
       const baseR = 40;
 
-      bubbles = items.map((item) => {
+      // ✅ archived を除外
+      const visibleItems = items.filter((item) => !item.archived);
+
+      bubbles = visibleItems.map((item) => {
         const img = new Image();
-        img.src = item.imageSrc;
+        // ✅ id とファイル名を一致させる: public/items/<id>.jpg
+        img.src = `/items/${item.id}.jpg`;
         img.decoding = "async";
 
         return {
