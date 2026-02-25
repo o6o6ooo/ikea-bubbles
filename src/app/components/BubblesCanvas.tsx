@@ -18,6 +18,12 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
+  // ✅ クリックで選択（stateにするとeffect再実行の原因になりがちなのでrefで持つ）
+  const selectedIdRef = useRef<string | null>(null);
+
+  // ✅ bubblesを保持（クリックで作り直さない）
+  const bubblesRef = useRef<Bubble[]>([]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -26,7 +32,6 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
     if (!ctx) return;
 
     let rafId = 0;
-    let bubbles: Bubble[] = [];
 
     const setupCanvasSize = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -52,7 +57,7 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
 
       const visibleItems = items.filter((item) => !item.archived);
 
-      bubbles = visibleItems.map((item) => {
+      const bubbles: Bubble[] = visibleItems.map((item) => {
         const img = new Image();
         img.src = `/items/${item.id}.jpg`;
         img.decoding = "async";
@@ -68,6 +73,8 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
           rTarget: baseR,
         };
       });
+
+      bubblesRef.current = bubbles;
     };
 
     const drawBubbleImageCover = (b: Bubble) => {
@@ -101,6 +108,8 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
     const applyRepulsion = (cw: number, ch: number) => {
       const padding = 2;
       const strength = 0.35;
+
+      const bubbles = bubblesRef.current;
 
       for (let i = 0; i < bubbles.length; i++) {
         const a = bubbles[i];
@@ -138,6 +147,76 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       }
     };
 
+    // ✅ 円の中にテキストを折り返して描画
+    const wrapLines = (text: string, maxWidth: number) => {
+      const words = text.split(/\s+/).filter(Boolean);
+      const lines: string[] = [];
+      let line = "";
+
+      for (const w of words) {
+        const test = line ? `${line} ${w}` : w;
+        if (ctx.measureText(test).width <= maxWidth) {
+          line = test;
+        } else {
+          if (line) lines.push(line);
+          line = w;
+        }
+      }
+      if (line) lines.push(line);
+      return lines;
+    };
+
+    const drawSelectedOverlayText = (b: Bubble) => {
+      const padding = 14;
+      const maxW = b.r * 2 - padding * 2;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+
+      // うっすら暗くして文字を読みやすく
+      ctx.fillStyle = "rgba(0,0,0,0.28)";
+      ctx.fillRect(b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
+
+      // text
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
+
+      const title = b.item.name ?? "";
+      const desc = b.item.description ?? "";
+
+      // title
+      ctx.font = "600 14px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto";
+      const titleY = b.y - 10;
+      ctx.fillText(title, b.x, titleY);
+
+      // description (wrap)
+      ctx.font = "400 12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto";
+      const lines = wrapLines(desc, maxW).slice(0, 3); // 最大3行くらい
+      const lineH = 16;
+      const startY = b.y + 14 - ((lines.length - 1) * lineH) / 2;
+
+      lines.forEach((ln, i) => {
+        ctx.fillText(ln, b.x, startY + i * lineH);
+      });
+
+      ctx.restore();
+    };
+
+    const pickBubbleIdAt = (x: number, y: number) => {
+      // 大きい順で当たり判定（選択中がでかいのでクリックしやすくなる）
+      const bubbles = [...bubblesRef.current].sort((a, b) => b.r - a.r);
+      for (const b of bubbles) {
+        const dx = x - b.x;
+        const dy = y - b.y;
+        if (Math.hypot(dx, dy) <= b.r) return b.item.id;
+      }
+      return null;
+    };
+
     const tick = () => {
       const cw = window.innerWidth;
       const ch = window.innerHeight;
@@ -145,8 +224,16 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
 
-      // hover判定（拡大だけに使う）
+      const selectedId = selectedIdRef.current;
+      const bubbles = bubblesRef.current;
+
+      // hover/selected のターゲット半径
       for (const b of bubbles) {
+        if (selectedId && b.item.id === selectedId) {
+          b.rTarget = 92; // ✅ クリックでさらに大きく
+          continue;
+        }
+
         const dx = mx - b.x;
         const dy = my - b.y;
         const dist = Math.hypot(dx, dy);
@@ -156,15 +243,16 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
 
       applyRepulsion(cw, ch);
 
+      // background gradient
       const grad = ctx.createLinearGradient(0, 0, 0, ch);
-      grad.addColorStop(0, "#0E3B73");  // 少し濃い
-      grad.addColorStop(1, "#0A4DA2");  // IKEAブルー
-
+      grad.addColorStop(0, "#0E3B73");
+      grad.addColorStop(1, "#0A4DA2");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, cw, ch);
 
       for (const b of bubbles) {
-        b.r += (b.rTarget - b.r) * 0.12;
+        const lerp = selectedId && b.item.id === selectedId ? 0.16 : 0.12;
+        b.r += (b.rTarget - b.r) * lerp;
 
         b.x += b.vx;
         b.y += b.vy;
@@ -188,22 +276,23 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
           b.vy *= -1;
         }
 
-        // ✅ 枠なし：影だけで浮かせる（境界を綺麗に見せる）
+        // shadow only
         ctx.save();
-        ctx.shadowColor = "rgba(0,0,0,0.25)";
+        ctx.shadowColor = "rgba(0,0,0,0.22)";
         ctx.shadowBlur = 18;
         ctx.shadowOffsetY = 8;
-
         ctx.beginPath();
         ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        // 影を出すためのダミー塗り（透明に近くして影だけ出す）
         ctx.fillStyle = "rgba(0,0,0,0.01)";
         ctx.fill();
-
         ctx.restore();
 
-        // image
         drawBubbleImageCover(b);
+
+        // ✅ 選択中だけ円の中にテキスト
+        if (selectedId && b.item.id === selectedId) {
+          drawSelectedOverlayText(b);
+        }
       }
 
       rafId = requestAnimationFrame(tick);
@@ -214,15 +303,27 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       mouseRef.current.y = e.clientY;
     };
 
+    const onClick = (e: MouseEvent) => {
+      const id = pickBubbleIdAt(e.clientX, e.clientY);
+      if (!id) return;
+      selectedIdRef.current = selectedIdRef.current === id ? null : id; // nullなら解除（クリック外）
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") selectedIdRef.current = null;
+    };
+
     const onResize = () => {
       setupCanvasSize();
-      initBubbles();
+      initBubbles(); // ✅ リサイズのときだけ並び直し
     };
 
     setupCanvasSize();
     initBubbles();
 
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("click", onClick);
+    window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
 
     rafId = requestAnimationFrame(tick);
@@ -230,6 +331,8 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("click", onClick);
+      window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);
     };
   }, [items]);
