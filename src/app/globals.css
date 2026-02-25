@@ -23,7 +23,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #0E3B73 0%, #0A4DA2 100%);
+  background: #0A4DA2;
   min-height: 100svh;
 }
 
