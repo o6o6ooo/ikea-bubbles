@@ -29,9 +29,7 @@ body {
 
 body {
   overflow: hidden;
-  overscroll-behavior: none;
   -webkit-overflow-scrolling: auto;
-  touch-action: none;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
