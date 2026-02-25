@@ -3,7 +3,7 @@ import { items } from "@/data/items";
 
 export default function Home() {
   return (
-    <main className="relative h-screen w-screen overflow-hidden">
+    <main className="relative min-h-svh w-screen overflow-hidden">
       <div className="absolute inset-0">
         <BubblesCanvas items={items} />
       </div>
