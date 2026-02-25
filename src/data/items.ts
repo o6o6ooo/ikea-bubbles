@@ -104,6 +104,16 @@ export const items: IkeaItem[] = [
     description: "Bin",
   },
   {
+    id: "friheten_grey",
+    name: "Friheten",
+    description: "Sofa bed",
+  },
+  {
+    id: "frojda",
+    name: "Fröjda",
+    description: "Candle holder",
+  },
+  {
     id: "fullandad_pasta_server",
     name: "Fulländad",
     description: "Pasta server",
@@ -120,6 +130,11 @@ export const items: IkeaItem[] = [
   },
   {
     id: "glis_blue_yellow",
+    name: "Glis",
+    description: "Storage box",
+  },
+  {
+    id: "glis_pink_turquoise",
     name: "Glis",
     description: "Storage box",
   },
@@ -187,6 +202,11 @@ export const items: IkeaItem[] = [
     id: "ikea365_saucepan_1l",
     name: "Ikea365",
     description: "Saucepan",
+  },
+  {
+    id: "jules_white",
+    name: "Jules",
+    description: "Desk chair",
   },
   {
     id: "kafferep_biscuits_with_almonds_and_ginger",
