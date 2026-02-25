@@ -94,7 +94,7 @@ export const items: IkeaItem[] = [
     description: "Inner cushion",
   },
   {
-    id: "flodnejonöga",
+    id: "flodnejonoga",
     name: "Flodnejonöga",
     description: "Spoon",
   },
