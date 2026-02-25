@@ -19,7 +19,7 @@ export const items: IkeaItem[] = [
     description: "tree ornament",
   },
   {
-    id: "almtjärn_round_bathmat_blue",
+    id: "almtjarn_round_bathmat_blue",
     name: "Almtjärn",
     description: "Bathmat",
   },
@@ -64,7 +64,7 @@ export const items: IkeaItem[] = [
     description: "Storage bag",
   },
   {
-    id: "drömbild",
+    id: "drombild",
     name: "Drömbild",
     description: "Mug",
   },
@@ -89,7 +89,7 @@ export const items: IkeaItem[] = [
     description: "Resealable bag set",
   },
   {
-    id: "fjädrar",
+    id: "fjadrar",
     name: "Fjädrar",
     description: "Inner cushion",
   },
@@ -104,12 +104,12 @@ export const items: IkeaItem[] = [
     description: "Bin",
   },
   {
-    id: "fulländad_pasta_server",
+    id: "fullandad_pasta_server",
     name: "Fulländad",
     description: "Pasta server",
   },
   {
-    id: "fulländad_soup_ladle",
+    id: "fullandad_soup_ladle",
     name: "Fulländad",
     description: "Soup ladle",
   },
@@ -129,7 +129,7 @@ export const items: IkeaItem[] = [
     description: "Lamp shade",
   },
   {
-    id: "hållbar_22l",
+    id: "hallbar_22l",
     name: "Hållbar",
     description: "Bin",
   },
@@ -139,7 +139,7 @@ export const items: IkeaItem[] = [
     description: "Frame",
   },
   {
-    id: "högön_parasol_grey",
+    id: "hogon_parasol_grey",
     name: "Högön",
     description: "Parasol",
   },
