@@ -225,12 +225,12 @@ export const items: IkeaItem[] = [
   },
   {
     id: "knoppang_13x18",
-    name: "Knoppang",
+    name: "Knoppäng",
     description: "",
   },
   {
     id: "knoppang_50x70",
-    name: "Knoppang",
+    name: "Knoppäng",
     description: "",
   },
   {
@@ -270,7 +270,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "lattbakad_dough_cutter",
-    name: "Lattbakad",
+    name: "Lättbakad",
     description: "",
   },
   {
@@ -280,12 +280,12 @@ export const items: IkeaItem[] = [
   },
   {
     id: "linanas_2_seat",
-    name: "Linanas",
+    name: "Linanäs",
     description: "",
   },
   {
     id: "loftesrik_stainless",
-    name: "Loftesrik",
+    name: "Löftesrik",
     description: "",
   },
   {
@@ -305,7 +305,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "mantagg_pizza_tray",
-    name: "Mantagg",
+    name: "Måntagg",
     description: "",
   },
   {
@@ -315,7 +315,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "nammaro_storagebox",
-    name: "Nammaro",
+    name: "Nämmarö",
     description: "",
   },
   {
@@ -335,7 +335,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "parkla_55x49x19",
-    name: "Parkla",
+    name: "Pärkla",
     description: "",
   },
   {
@@ -370,12 +370,12 @@ export const items: IkeaItem[] = [
   },
   {
     id: "rort_spoon",
-    name: "Rort",
+    name: "Rört",
     description: "",
   },
   {
     id: "saportmal",
-    name: "Saportmal",
+    name: "Såpörtmal",
     description: "",
   },
   {
@@ -390,7 +390,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "skogsfraken_pillow_high_50x80",
-    name: "Skogsfraken",
+    name: "Skogsfräken",
     description: "",
   },
   {
@@ -405,7 +405,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "snoyra_lighting_chain_40",
-    name: "Snoyra",
+    name: "Snöyra",
     description: "",
   },
   {
@@ -415,17 +415,17 @@ export const items: IkeaItem[] = [
   },
   {
     id: "strala_cord_set",
-    name: "Strala",
+    name: "Stråla",
     description: "",
   },
   {
     id: "strala_lighting_chain_100",
-    name: "Strala",
+    name: "Stråla",
     description: "",
   },
   {
     id: "strala_star_lamp_shade_70cm",
-    name: "Strala",
+    name: "Stråla",
     description: "",
   },
   {
@@ -435,7 +435,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "svartoxbar_scented_candle_mimosa_yellow_45hr",
-    name: "Svartoxbar",
+    name: "Svartoxbär",
     description: "",
   },
   {
@@ -475,7 +475,7 @@ export const items: IkeaItem[] = [
   },
   {
     id: "torparo_table_and_chairs",
-    name: "Torparo",
+    name: "Torparö",
     description: "",
   },
   {
