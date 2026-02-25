@@ -31,15 +31,12 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
     const setupCanvasSize = () => {
       const dpr = window.devicePixelRatio || 1;
 
-      // internal pixel size
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
 
-      // CSS size
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
 
-      // draw in CSS pixels
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
@@ -50,24 +47,19 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       const cx = cw / 2;
       const cy = ch / 2;
 
-      // 密集度：小さいほどギュッとする
       const spread = Math.min(cw, ch) * 0.18;
-
       const baseR = 40;
 
-      // ✅ archived を除外
       const visibleItems = items.filter((item) => !item.archived);
 
       bubbles = visibleItems.map((item) => {
         const img = new Image();
-        // ✅ id とファイル名を一致させる: public/items/<id>.jpg
         img.src = `/items/${item.id}.jpg`;
         img.decoding = "async";
 
         return {
           item,
           img,
-          // ✅ 中央寄せクラスター
           x: cx + (Math.random() - 0.5) * spread * 2,
           y: cy + (Math.random() - 0.5) * spread * 2,
           vx: (Math.random() - 0.5) * 0.35,
@@ -79,7 +71,6 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
     };
 
     const drawBubbleImageCover = (b: Bubble) => {
-      // Clip circle
       ctx.save();
       ctx.beginPath();
       ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
@@ -89,7 +80,6 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       const iw = b.img.naturalWidth;
       const ih = b.img.naturalHeight;
 
-      // ✅ 画像がまだロードされてない場合はプレースホルダー
       if (!iw || !ih) {
         ctx.beginPath();
         ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
@@ -99,7 +89,6 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
         return;
       }
 
-      // Cover (object-fit: cover)
       const size = b.r * 2;
       const scale = Math.max(size / iw, size / ih);
       const w = iw * scale;
@@ -109,35 +98,80 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
       ctx.restore();
     };
 
+    const applyRepulsion = (cw: number, ch: number) => {
+      const padding = 2;
+      const strength = 0.35;
+
+      for (let i = 0; i < bubbles.length; i++) {
+        const a = bubbles[i];
+        for (let j = i + 1; j < bubbles.length; j++) {
+          const b = bubbles[j];
+
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.hypot(dx, dy) || 0.0001;
+
+          const minDist = a.rTarget + b.rTarget + padding;
+
+          if (dist < minDist) {
+            const nx = dx / dist;
+            const ny = dy / dist;
+
+            const overlap = minDist - dist;
+
+            const push = overlap * 0.5 * strength;
+            a.x -= nx * push;
+            a.y -= ny * push;
+            b.x += nx * push;
+            b.y += ny * push;
+
+            const vpush = overlap * 0.0008 * strength;
+            a.vx -= nx * vpush;
+            a.vy -= ny * vpush;
+            b.vx += nx * vpush;
+            b.vy += ny * vpush;
+          }
+        }
+
+        a.x = Math.max(a.r, Math.min(cw - a.r, a.x));
+        a.y = Math.max(a.r, Math.min(ch - a.r, a.y));
+      }
+    };
+
     const tick = () => {
       const cw = window.innerWidth;
       const ch = window.innerHeight;
 
-      // background
-      ctx.fillStyle = "#0058A3";
-      ctx.fillRect(0, 0, cw, ch);
-
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
 
+      // hover判定（拡大だけに使う）
       for (const b of bubbles) {
-        // hover radius animation
         const dx = mx - b.x;
         const dy = my - b.y;
         const dist = Math.hypot(dx, dy);
 
         b.rTarget = dist < b.r ? 55 : 40;
+      }
+
+      applyRepulsion(cw, ch);
+
+      const grad = ctx.createLinearGradient(0, 0, 0, ch);
+      grad.addColorStop(0, "#0E3B73");  // 少し濃い
+      grad.addColorStop(1, "#0A4DA2");  // IKEAブルー
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, cw, ch);
+
+      for (const b of bubbles) {
         b.r += (b.rTarget - b.r) * 0.12;
 
-        // movement
         b.x += b.vx;
         b.y += b.vy;
 
-        // friction (Appleっぽいヌルっと感)
         b.vx *= 0.995;
         b.vy *= 0.995;
 
-        // bounce
         if (b.x < b.r) {
           b.x = b.r;
           b.vx *= -1;
@@ -154,23 +188,22 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
           b.vy *= -1;
         }
 
-        // rim (白い縁があるとIKEA商品写真が締まる)
+        // ✅ 枠なし：影だけで浮かせる（境界を綺麗に見せる）
+        ctx.save();
+        ctx.shadowColor = "rgba(0,0,0,0.25)";
+        ctx.shadowBlur = 18;
+        ctx.shadowOffsetY = 8;
+
         ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r + 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.9)";
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        // 影を出すためのダミー塗り（透明に近くして影だけ出す）
+        ctx.fillStyle = "rgba(0,0,0,0.01)";
         ctx.fill();
+
+        ctx.restore();
 
         // image
         drawBubbleImageCover(b);
-
-        // hover highlight
-        if (dist < b.r) {
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, b.r + 2.5, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(255,255,255,0.9)";
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        }
       }
 
       rafId = requestAnimationFrame(tick);
@@ -183,7 +216,7 @@ export default function BubblesCanvas({ items }: { items: IkeaItem[] }) {
 
     const onResize = () => {
       setupCanvasSize();
-      initBubbles(); // ✅ リサイズ時に再配置（少数でも見栄え優先）
+      initBubbles();
     };
 
     setupCanvasSize();
