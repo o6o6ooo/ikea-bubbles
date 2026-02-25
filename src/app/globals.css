@@ -19,19 +19,19 @@
   }
 }
 
-/* ✅ iOSの上下白対策：html/bodyをIKEAブルーで固定 */
 html,
 body {
-  background: linear-gradient(to bottom,#0E3B73 0%,#0A4DA2 100%);
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #0E3B73 0%, #0A4DA2 100%);
+  min-height: 100svh;
 }
 
-/* ✅ このサイトはスクロールしないので、バウンス自体を止める（最強） */
 body {
-  margin: 0;
   overflow: hidden;
-  position: fixed;
-  inset: 0;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+  touch-action: none;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
