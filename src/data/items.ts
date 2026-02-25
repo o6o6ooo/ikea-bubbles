@@ -188,5 +188,359 @@ export const items: IkeaItem[] = [
     name: "Ikea365",
     description: "Saucepan",
   },
-
+  {
+    id: "kafferep_biscuits_with_almonds_and_ginger",
+    name: "Kafferep",
+    description: "",
+  },
+  {
+    id: "kafferep_oats_biscuits",
+    name: "Kafferep",
+    description: "",
+  },
+  {
+    id: "kafferep_oats_biscuits_with_cinnamon",
+    name: "Kafferep",
+    description: "",
+  },
+  {
+    id: "ketchup",
+    name: "Ketchup",
+    description: "",
+  },
+  {
+    id: "kleppstad_wardrobe_2_doors",
+    name: "Kleppstad",
+    description: "",
+  },
+  {
+    id: "klockren_pan_lid_28cm",
+    name: "Klockren",
+    description: "",
+  },
+  {
+    id: "knagglig_46x31x25",
+    name: "Knagglig",
+    description: "",
+  },
+  {
+    id: "knoppang_13x18",
+    name: "Knoppang",
+    description: "",
+  },
+  {
+    id: "knoppang_50x70",
+    name: "Knoppang",
+    description: "",
+  },
+  {
+    id: "koncis_can_opener",
+    name: "Koncis",
+    description: "",
+  },
+  {
+    id: "koncis_garlic_press",
+    name: "Koncis",
+    description: "",
+  },
+  {
+    id: "koppla_4way_socket",
+    name: "Koppla",
+    description: "",
+  },
+  {
+    id: "korken_bottle_shaped_400ml",
+    name: "Korken",
+    description: "",
+  },
+  {
+    id: "korken_jar_1800ml",
+    name: "Korken",
+    description: "",
+  },
+  {
+    id: "korken_jar_1l",
+    name: "Korken",
+    description: "",
+  },
+  {
+    id: "korken_jar_2l",
+    name: "Korken",
+    description: "",
+  },
+  {
+    id: "lattbakad_dough_cutter",
+    name: "Lattbakad",
+    description: "",
+  },
+  {
+    id: "lersta_white",
+    name: "Lersta",
+    description: "",
+  },
+  {
+    id: "linanas_2_seat",
+    name: "Linanas",
+    description: "",
+  },
+  {
+    id: "loftesrik_stainless",
+    name: "Loftesrik",
+    description: "",
+  },
+  {
+    id: "luddros_mattress_protector",
+    name: "Luddros",
+    description: "",
+  },
+  {
+    id: "luddros_pillow_protector",
+    name: "Luddros",
+    description: "",
+  },
+  {
+    id: "magasin",
+    name: "Magasin",
+    description: "",
+  },
+  {
+    id: "mantagg_pizza_tray",
+    name: "Mantagg",
+    description: "",
+  },
+  {
+    id: "mittzon_desk_160x80",
+    name: "Mittzon",
+    description: "",
+  },
+  {
+    id: "nammaro_storagebox",
+    name: "Nammaro",
+    description: "",
+  },
+  {
+    id: "neiden_double",
+    name: "Neiden",
+    description: "",
+  },
+  {
+    id: "nejlika",
+    name: "Nejlika",
+    description: "",
+  },
+  {
+    id: "nimm_storagebox_yellow_25x35x15",
+    name: "Nimm",
+    description: "",
+  },
+  {
+    id: "parkla_55x49x19",
+    name: "Parkla",
+    description: "",
+  },
+  {
+    id: "pepprig_cleaningset",
+    name: "Pepprig",
+    description: "",
+  },
+  {
+    id: "pepprig_cloth",
+    name: "Pepprig",
+    description: "",
+  },
+  {
+    id: "pepprig_dustpan_and_brush_yellow",
+    name: "Pepprig",
+    description: "",
+  },
+  {
+    id: "pepprig_mop_blue",
+    name: "Pepprig",
+    description: "",
+  },
+  {
+    id: "poetisk",
+    name: "Poetisk",
+    description: "",
+  },
+  {
+    id: "rinnig_dish_washing_brush_yellow",
+    name: "Rinnig",
+    description: "",
+  },
+  {
+    id: "rort_spoon",
+    name: "Rort",
+    description: "",
+  },
+  {
+    id: "saportmal",
+    name: "Saportmal",
+    description: "",
+  },
+  {
+    id: "sindal",
+    name: "Sindal",
+    description: "",
+  },
+  {
+    id: "skogsduva_cushion_flower",
+    name: "Skogsduva",
+    description: "",
+  },
+  {
+    id: "skogsfraken_pillow_high_50x80",
+    name: "Skogsfraken",
+    description: "",
+  },
+  {
+    id: "skubb_9_compartments_white",
+    name: "Skubb",
+    description: "",
+  },
+  {
+    id: "slibb_laundry_basket_blue",
+    name: "Slibb",
+    description: "",
+  },
+  {
+    id: "snoyra_lighting_chain_40",
+    name: "Snoyra",
+    description: "",
+  },
+  {
+    id: "stajlig",
+    name: "Stajlig",
+    description: "",
+  },
+  {
+    id: "strala_cord_set",
+    name: "Strala",
+    description: "",
+  },
+  {
+    id: "strala_lighting_chain_100",
+    name: "Strala",
+    description: "",
+  },
+  {
+    id: "strala_star_lamp_shade_70cm",
+    name: "Strala",
+    description: "",
+  },
+  {
+    id: "svalka_30cl",
+    name: "Svalka",
+    description: "",
+  },
+  {
+    id: "svartoxbar_scented_candle_mimosa_yellow_45hr",
+    name: "Svartoxbar",
+    description: "",
+  },
+  {
+    id: "tillreda_microwave",
+    name: "Tillreda",
+    description: "",
+  },
+  {
+    id: "tillvaro_tealight",
+    name: "Tillvaro",
+    description: "",
+  },
+  {
+    id: "tisken_corner_shelf",
+    name: "Tisken",
+    description: "",
+  },
+  {
+    id: "tisken_toothbrush_holder",
+    name: "Tisken",
+    description: "",
+  },
+  {
+    id: "tjabba",
+    name: "Tjabba",
+    description: "",
+  },
+  {
+    id: "tjena_white_18x25x15",
+    name: "Tjena",
+    description: "",
+  },
+  {
+    id: "tolkning_basket_50x43x19",
+    name: "Tolkning",
+    description: "",
+  },
+  {
+    id: "torparo_table_and_chairs",
+    name: "Torparo",
+    description: "",
+  },
+  {
+    id: "trixig_precision_screwdriver_set",
+    name: "Trixig",
+    description: "",
+  },
+  {
+    id: "trixig_spirit_level",
+    name: "Trixig",
+    description: "",
+  },
+  {
+    id: "trofast_storage_tray_with_compartments",
+    name: "Trofast",
+    description: "",
+  },
+  {
+    id: "uppdatera_cutlery_tray_white_32x31",
+    name: "Uppdatera",
+    description: "",
+  },
+  {
+    id: "uppfylld_pizza_cutter",
+    name: "Uppfylld",
+    description: "",
+  },
+  {
+    id: "uppfylld_salad_spinner",
+    name: "Uppfylld",
+    description: "",
+  },
+  {
+    id: "upphetta_black",
+    name: "Upphetta",
+    description: "",
+  },
+  {
+    id: "variera_drawer_mat_white",
+    name: "Variera",
+    description: "",
+  },
+  {
+    id: "vinterfint_christmas_tree_180cm",
+    name: "Vinterfint",
+    description: "",
+  },
+  {
+    id: "vinterfint_christmas_tree_in_pot_12cm",
+    name: "Vinterfint",
+    description: "",
+  },
+  {
+    id: "vinterfint_gift_wrap",
+    name: "Vinterfint",
+    description: "",
+  },
+  {
+    id: "vinterfint_ornament_bell",
+    name: "Vinterfint",
+    description: "",
+  },
+  {
+    id: "vinterfint_ornament_hanger",
+    name: "Vinterfint",
+    description: "",
+  },
 ];
