@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "IKEA Bubbles",
   description: "Personal non-commercial UI experiment",
   themeColor: "#0E3B73",
+  icons: {
+    icon: "/favicon.svg",
+  }
 };
 
 export const viewport: Viewport = {
